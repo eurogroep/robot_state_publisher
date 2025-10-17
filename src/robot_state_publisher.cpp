@@ -77,6 +77,23 @@ geometry_msgs::msg::TransformStamped kdlToTransform(const KDL::Frame & k)
 RobotStatePublisher::RobotStatePublisher(const rclcpp::NodeOptions & options)
 : rclcpp::Node("robot_state_publisher", options)
 {
+    use_robot_description_topic_ = this->declare_parameter("use_robot_description_topic", false);
+
+  if (use_robot_description_topic_) {
+    description_sub_ = this->create_subscription<std_msgs::msg::String>(
+        "robot_description", rclcpp::QoS(1).transient_local().reliable(),
+      [this](const std_msgs::msg::String::SharedPtr msg) {
+        try {
+          this->setupURDF(msg->data);
+          this->publishFixedTransforms();
+        } catch (const std::exception & ex) {
+          RCLCPP_ERROR(this->get_logger(), "Failed to parse robot description from topic: %s",
+            ex.what());
+        }
+        });
+
+    RCLCPP_DEBUG(this->get_logger(), "Waiting for robot_description on topic...");
+  } else {
   // get the XML
   std::string urdf_xml = this->declare_parameter("robot_description", std::string(""));
   if (urdf_xml.empty()) {
@@ -111,7 +128,7 @@ RobotStatePublisher::RobotStatePublisher(const rclcpp::NodeOptions & options)
     } catch (const std::runtime_error & err) {
       RCLCPP_FATAL(get_logger(), "%s", err.what());
       throw;
-    }
+    }}
   }
 
   // set publish frequency
@@ -129,13 +146,6 @@ RobotStatePublisher::RobotStatePublisher(const rclcpp::NodeOptions & options)
   tf_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(this);
   static_tf_broadcaster_ = std::make_unique<tf2_ros::StaticTransformBroadcaster>(this);
 
-  description_pub_ = this->create_publisher<std_msgs::msg::String>(
-    "robot_description",
-    // Transient local is similar to latching in ROS 1.
-    rclcpp::QoS(1).transient_local());
-
-  setupURDF(urdf_xml);
-
   auto subscriber_options = rclcpp::SubscriptionOptions();
   subscriber_options.qos_overriding_options =
     rclcpp::QosOverridingOptions::with_default_policies();
@@ -148,17 +158,6 @@ RobotStatePublisher::RobotStatePublisher(const rclcpp::NodeOptions & options)
     subscriber_options);
 
   publishFixedTransforms();
-
-  // Now that we have successfully declared the parameters and done all
-  // necessary setup, install the callback for updating parameters.
-  param_cb_ = add_on_set_parameters_callback(
-    std::bind(&RobotStatePublisher::parameterUpdate, this, std::placeholders::_1));
-
-  // Now that we have successfully declared the parameters and done all
-  // necessary setup, install the callback for updating parameters.
-  parameter_subscription_ = rclcpp::AsyncParametersClient::on_parameter_event(
-    this->get_node_topics_interface(),
-    std::bind(&RobotStatePublisher::onParameterEvent, this, std::placeholders::_1));
 }
 
 KDL::Tree RobotStatePublisher::parseURDF(const std::string & urdf_xml, urdf::Model & model)
@@ -210,7 +209,9 @@ void RobotStatePublisher::setupURDF(const std::string & urdf_xml)
   msg->data = urdf_xml;
 
   // Publish the robot description
-  description_pub_->publish(std::move(msg));
+  if (!use_robot_description_topic_) {
+    description_pub_->publish(std::move(msg));
+  }
 
   RCLCPP_INFO(get_logger(), "Robot initialized");
 }

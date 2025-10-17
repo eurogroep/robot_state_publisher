@@ -1,0 +1,49 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/yannick/dev/Lowpad.Robot/install/include/**",
+        "/opt/ros/jazzy/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/deps/ddynamic_reconfigure/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/deps/filters/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/deps/iris_lama/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/deps/laser_filters/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/deps/laser_geometry/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/deps/micro_ros_agent/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/deps/robot_state_publisher/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/deps/sick_safetyscanners2/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/deps/sick_safetyscanners_base/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/accerion_driver/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/accerion_gazebo_plugins/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/custom_diagnostics/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/custom_gazebo_plugins/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/localization_mapping/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/lowpad_controllers/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/lowpad_hardware_interfaces/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/lowpad_intelligence/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/lowpad_navigation/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/lowpad_util/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/lowpad_vision/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/rclcpp_message_converter/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/rosbag_tools/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/telemetry/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/wm/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/wm_conversions/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/wm_navigation/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/wm_ros/include/**",
+        "/home/yannick/dev/Lowpad.Robot/src/pkgs/wm_sensors/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
