@@ -129,6 +129,13 @@ RobotStatePublisher::RobotStatePublisher(const rclcpp::NodeOptions & options)
       RCLCPP_FATAL(get_logger(), "%s", err.what());
       throw;
     }}
+
+    description_pub_ = this->create_publisher<std_msgs::msg::String>(
+    "robot_description",
+    // Transient local is similar to latching in ROS 1.
+    rclcpp::QoS(1).transient_local());
+
+    setupURDF(urdf_xml);
   }
 
   // set publish frequency
@@ -212,7 +219,7 @@ void RobotStatePublisher::setupURDF(const std::string & urdf_xml)
   if (!use_robot_description_topic_) {
     description_pub_->publish(std::move(msg));
   }
-
+  
   RCLCPP_INFO(get_logger(), "Robot initialized");
 }
 
