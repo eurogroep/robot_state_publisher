@@ -1,6 +1,19 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for package robot_state_publisher
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3.3.4 (2026-05-13)
+------------------
+* Disable tests. [Yannick de Hoop]
+* Publish robot_description when using parameter as input. [Jeanine van
+  Bruggen]
+* Add functionality to read description from a topic instead of a
+  parameter (#234) [Alejandro Hernández Cordero, Kenji Brameld
+  (TRACLabs)]
+* Remove CODEOWNERS and mirror-rolling-to-main workflow (#229) (#230)
+  [Alejandro Hernández Cordero, mergify[bot]]
+
+  Signed-off-by: Alejandro Hernández Cordero <ahcorde@gmail.com>
+  (cherry picked from commit 34a7b23c15af2d2e4f863d5041c54922aa9bf675)
 
 3.3.3 (2024-01-24)
 ------------------
